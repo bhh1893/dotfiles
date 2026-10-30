@@ -4,22 +4,26 @@ My Neovim config and the steps to set up a new machine. It's written for macOS.
 
 `nvim/` is the source of truth. Edit it here, then copy it to `~/.config/nvim` on a new machine.
 
-## What's in `nvim/`
+### mini.nvim modules
 
-| File                          | What it does                                                                                      |
-| ----------------------------- | ------------------------------------------------------------------------------------------------- |
-| `init.lua`                    | Loads the files below in order                                                                    |
-| `lua/vim_config.lua`          | Options (leader is Space, line numbers, clipboard, …)                                             |
-| `lua/plugin.lua`              | Bootstraps lazy.nvim and loads everything in `lua/plugins/`                                       |
-| `lua/keys.lua`                | Window navigation and splits (`<leader>hjkl`, `<leader>v/s`), resizing (Ctrl+hjkl)                |
-| `lua/plugins/navigation.lua`  | oil.nvim (`<leader>e`), Snacks pickers (`<leader>f` files, `<leader>/` grep, `<leader>b` buffers) |
-| `lua/plugins/git.lua`         | gitsigns, lazygit (`<leader>gg`), Snacks git pickers, diffview (all under `<leader>g`)            |
-| `lua/plugins/mini-addons.lua` | mini.ai, align, comment, pairs, move (Alt+hjkl), surround, icons                                  |
-| `lua/plugins/markdown.lua`    | render-markdown: formatted markdown in the buffer (`<leader>m` toggles)                           |
-| `lua/plugins/dimmer.lua`      | vimade: dims inactive windows                                                                     |
-| `lua/plugins/statusline.lua`  | mini.statusline                                                                                   |
-| `lua/plugins/colorscheme.lua` | Colorscheme                                                                                       |
-| `lazy-lock.json`              | Pinned plugin versions                                                                            |
+| Module | Keys |
+|---|---|
+| ai | Text objects: `a` argument, `f` function call, `b` bracket, `q` quote, plus `n`/`l` for next/last (`cin"`) |
+| align | `ga` / `gA` align text |
+| comment | `gc` / `gcc` toggle comments |
+| pairs | Auto-closes brackets and quotes |
+| move | Alt+hjkl moves lines and selections |
+| surround | `sa` add, `sd` delete, `sr` replace surroundings |
+| icons | File and language icons |
+| completion | Popup as you type, Tab / Shift-Tab to move, Ctrl+y to accept |
+| jump | `f` / `t` work across lines; press `f` again to repeat |
+| jump2d | Enter shows labels on screen; type one to jump there |
+| misc | Reopens files at the last cursor position; `<leader>z` zooms the window |
+| trailspace | Highlights trailing whitespace; `<leader>cw` trims it |
+| starter | Start screen when Neovim opens without a file |
+| cursorword | Underlines other uses of the word under the cursor |
+| indentscope | Line showing the current indent scope; `ii` / `ai` text objects, `[i` / `]i` jumps |
+| clue | Pause after `<leader>`, `g`, `[`, `]`, `z`, `"`, `'` or Ctrl+w to see what can follow |
 
 ## New Mac setup
 
@@ -46,6 +50,12 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 brew install neovim git lazygit git-delta ripgrep fd fzf starship
 ```
 
+For coding in Neovim (Treesitter parsers, Python and Java language servers):
+
+```bash
+brew install tree-sitter-cli python openjdk
+```
+
 ```bash
 brew install --cask font-hack-nerd-font
 ```
@@ -55,18 +65,6 @@ Optional, for GitHub from the terminal (`gh pr create`, `gh pr checkout`, …):
 ```bash
 brew install gh
 ```
-
-| Tool                  | Used for                                                                        |
-| --------------------- | ------------------------------------------------------------------------------- |
-| `neovim`              | The editor                                                                      |
-| `git`                 | Newer than Apple's, and lazy.nvim uses it to install plugins                    |
-| `lazygit`             | Git interface, `<leader>gg` in Neovim                                           |
-| `git-delta`           | Readable diffs in `git diff`, `git log -p`, `git show` (the command is `delta`) |
-| `ripgrep`             | Text search, `<leader>/` in Neovim                                              |
-| `fd`                  | Fast file finding, `<leader>f` in Neovim                                        |
-| `fzf`                 | Fuzzy finder for the shell (to set up later)                                    |
-| `starship`            | Shell prompt with git branch and status                                         |
-| `font-hack-nerd-font` | Hack font with the icons the statusline and pickers use                         |
 
 ### 3. Terminal settings
 
@@ -87,7 +85,7 @@ git clone https://github.com/bhh1893/my_setup_bhh.git ~/dotfiles
 mkdir -p ~/.config && cp -R ~/dotfiles/nvim ~/.config/nvim
 ```
 
-Open `nvim`. lazy.nvim installs itself and every plugin on the first launch, at the versions in `lazy-lock.json`. Restart Neovim once it finishes.
+Open `nvim`. lazy.nvim installs itself and every plugin on the first launch, at the versions in `lazy-lock.json`. Restart Neovim once it finishes. Treesitter parsers build in the background, and Mason installs the language servers the first time you open a file (`:Mason` shows progress).
 
 A copy doesn't stay in sync with the repo. To edit the config in the repo and have Neovim pick it up directly, link it instead of copying:
 
@@ -103,6 +101,9 @@ cat >> ~/.zshrc <<'EOF'
 # Config files in ~/.config (lazygit looks in ~/Library/Application Support otherwise)
 export XDG_CONFIG_HOME="$HOME/.config"
 export EDITOR="nvim"
+
+# Homebrew's Java (brew doesn't link openjdk onto the PATH)
+export PATH="$(brew --prefix openjdk)/bin:$PATH"
 
 # Prompt
 eval "$(starship init zsh)"
