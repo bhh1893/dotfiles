@@ -90,10 +90,10 @@ Copy the config into place:
 mkdir -p ~/.config && cp -R ~/dotfiles/nvim ~/.config/nvim
 ```
 
-Or link it instead, so edits in the repo apply straight away:
+Or link it instead, so edits in the repo apply straight away (every config below has the same choice):
 
 ```bash
-ln -s ~/dotfiles/nvim ~/.config/nvim
+mkdir -p ~/.config && ln -s ~/dotfiles/nvim ~/.config/nvim
 ```
 
 Open `nvim`. lazy.nvim installs every plugin on first launch (versions pinned in `lazy-lock.json`); restart Neovim once it finishes. Treesitter parsers build in the background, and Mason installs the language servers the first time you open a file (`:Mason` shows progress).
@@ -123,6 +123,12 @@ Copy the starship prompt config (path from `~`, git branch, time on the right, `
 mkdir -p ~/.config && cp ~/dotfiles/starship/starship.toml ~/.config/starship.toml
 ```
 
+Or link it:
+
+```bash
+mkdir -p ~/.config && ln -sf ~/dotfiles/starship/starship.toml ~/.config/starship.toml
+```
+
 Back up the existing `~/.zshrc`, if there is one:
 
 ```bash
@@ -133,6 +139,12 @@ Copy the repo's `.zshrc` into place:
 
 ```bash
 cp ~/dotfiles/zsh/.zshrc ~/.zshrc
+```
+
+Or link it:
+
+```bash
+ln -sf ~/dotfiles/zsh/.zshrc ~/.zshrc
 ```
 
 Load it in the current shell:
@@ -147,6 +159,12 @@ Copy the tmux config into place (prefix Ctrl+Space, Iceberg colors):
 
 ```bash
 mkdir -p ~/.config/tmux && cp ~/dotfiles/tmux/tmux.conf ~/.config/tmux/tmux.conf
+```
+
+Or link it:
+
+```bash
+mkdir -p ~/.config/tmux && ln -sf ~/dotfiles/tmux/tmux.conf ~/.config/tmux/tmux.conf
 ```
 
 Start a session:

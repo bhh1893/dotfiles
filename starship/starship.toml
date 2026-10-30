@@ -1,5 +1,6 @@
 # ~/.config/starship.toml
 # Copy into place: cp ~/dotfiles/starship/starship.toml ~/.config/starship.toml
+# or link it:      ln -sf ~/dotfiles/starship/starship.toml ~/.config/starship.toml
 #
 # ~/full/path/to/dir on  branch                                   14:32
 # >

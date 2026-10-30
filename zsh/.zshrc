@@ -1,5 +1,6 @@
 # ~/.zshrc
 # Copy into place: cp ~/dotfiles/zsh/.zshrc ~/.zshrc
+# or link it:      ln -sf ~/dotfiles/zsh/.zshrc ~/.zshrc
 
 # ---- Environment -----
 
