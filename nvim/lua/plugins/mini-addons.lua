@@ -10,7 +10,13 @@ return {
       require('mini.comment').setup()  -- gc / gcc to toggle comments
       require('mini.pairs').setup()    -- auto-close brackets and quotes
       require('mini.move').setup()     -- Alt + hjkl to move lines / selections
-      require('mini.surround').setup() -- sa / sd / sr to add, delete, replace surroundings
+      require('mini.surround').setup({ -- gsa / gsd / gsr to add, delete, replace surroundings
+        -- On gs instead of s, which flash uses for jumping
+        mappings = {
+          add = 'gsa', delete = 'gsd', replace = 'gsr',
+          find = 'gsf', find_left = 'gsF', highlight = 'gsh',
+        },
+      })
       require('mini.icons').setup()    -- file and language icons (used by render-markdown)
       require('mini.completion').setup() -- completion popup + signature help (LSP, buffer words)
 
@@ -26,10 +32,6 @@ return {
         pattern = { 'snacks_picker_input', 'snacks_input' },
         callback = function() vim.b.minicompletion_disable = true end,
       })
-
-      -- Movement
-      require('mini.jump').setup()     -- f / F / t / T work across lines; press f again to repeat
-      require('mini.jump2d').setup()   -- Enter shows jump labels on screen; type a label to jump
 
       -- Workflow
       local misc = require('mini.misc')
@@ -70,6 +72,7 @@ return {
         clues = {
           { mode = 'n', keys = '<Leader>g', desc = '+Git' },
           { mode = 'n', keys = '<Leader>c', desc = '+Code' },
+          { mode = 'n', keys = 'gs', desc = '+Surround' },
           miniclue.gen_clues.builtin_completion(),
           miniclue.gen_clues.g(),
           miniclue.gen_clues.marks(),

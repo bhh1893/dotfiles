@@ -13,17 +13,26 @@ My Neovim config and the steps to set up a new machine. It's written for macOS.
 | comment | `gc` / `gcc` toggle comments |
 | pairs | Auto-closes brackets and quotes |
 | move | Alt+hjkl moves lines and selections |
-| surround | `sa` add, `sd` delete, `sr` replace surroundings |
+| surround | `gsa` add, `gsd` delete, `gsr` replace surroundings (on `gs` because flash uses `s`) |
 | icons | File and language icons |
 | completion | Popup as you type, Tab / Shift-Tab to move, Ctrl+y to accept |
-| jump | `f` / `t` work across lines; press `f` again to repeat |
-| jump2d | Enter shows labels on screen; type one to jump there |
 | misc | Reopens files at the last cursor position; `<leader>z` zooms the window |
 | trailspace | Highlights trailing whitespace; `<leader>cw` trims it |
 | starter | Start screen when Neovim opens without a file |
 | cursorword | Underlines other uses of the word under the cursor |
 | indentscope | Line showing the current indent scope; `ii` / `ai` text objects, `[i` / `]i` jumps |
 | clue | Pause after `<leader>`, `g`, `[`, `]`, `z`, `"`, `'` or Ctrl+w to see what can follow |
+
+### flash.nvim
+
+| Keys | Action |
+|---|---|
+| `s` | Type a few characters, then the label next to the match to jump there |
+| `S` | Select a Treesitter node (function, block, …) by label |
+| `f` / `t` / `F` / `T` | Work across lines with highlighted targets; press again to repeat |
+| `r` (after an operator) | Remote: act on text elsewhere without moving (`yr` + label + motion) |
+| `R` (after an operator / in visual) | Treesitter search |
+| Ctrl+s (in `/` search) | Toggle flash labels on the search |
 
 ## New Mac setup
 
