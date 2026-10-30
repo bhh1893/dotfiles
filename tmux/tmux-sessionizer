@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # ~/.local/bin/tmux-sessionizer
 # Pick a folder with fzf, then switch to its tmux session (created first if needed).
-# Lists the folder the current session started in (".") and its subfolders, so
-# run `tmux` in your projects folder and every project in it is one pick away.
+# Lists the folder the current session started in (".") and its subfolders, plus
+# the folder above ("..") and its subfolders ("../name"), so started in a repo
+# or in your projects folder, every project nearby is one pick away.
 # Search somewhere else once: tmux-sessionizer ~/code
 
 if [ -n "$1" ]; then
@@ -14,12 +15,26 @@ elif [ -n "$TMUX" ]; then
 else
   root=$PWD
 fi
-root=${root%/}
+[ "$root" != / ] && root=${root%/}
+parent=$(dirname "$root")
 
-pick=$( { echo .; find "$root" -mindepth 1 -maxdepth 1 -type d ! -name '.*' -exec basename {} \; | sort; } \
-  | fzf --prompt "session> " --reverse) || exit 0
+subfolders() { find "$1" -mindepth 1 -maxdepth 1 -type d ! -name '.*' ! -path "$root" -exec basename {} \; | sort; }
 
-if [ "$pick" = . ]; then dir=$root; else dir=$root/$pick; fi
+pick=$( {
+  echo .
+  subfolders "$root"
+  if [ "$parent" != "$root" ]; then
+    echo ..
+    subfolders "$parent" | sed 's|^|../|'
+  fi
+} | fzf --prompt "session> " --reverse) || exit 0
+
+case $pick in
+  .)    dir=$root ;;
+  ..)   dir=$parent ;;
+  ../*) dir=$parent/${pick#../} ;;
+  *)    dir=$root/$pick ;;
+esac
 
 # tmux session names can't contain . or :
 name=$(basename "$dir" | tr .: __)

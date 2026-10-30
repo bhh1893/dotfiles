@@ -9,6 +9,12 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export EDITOR="nvim"
 alias vim="nvim"
 
+# Personal scripts (tmux-sessionizer lives here)
+export PATH="$HOME/.local/bin:$PATH"
+
+# Attach to tmux and pick a running session from the list
+alias ta='tmux attach \; choose-tree -Zs'
+
 # Colored output from macOS's built-in tools (ls, etc.)
 export CLICOLOR=1
 
