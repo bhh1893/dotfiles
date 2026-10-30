@@ -2,7 +2,7 @@
 # Copy into place: cp ~/dotfiles/starship/starship.toml ~/.config/starship.toml
 # or link it:      ln -sf ~/dotfiles/starship/starship.toml ~/.config/starship.toml
 #
-# ~/full/path/to/dir on  branch                                   14:32
+# ~/full/path/to/dir on  branch !?                                14:32
 # >
 
 "$schema" = 'https://starship.rs/config-schema.json'
@@ -12,6 +12,7 @@ add_newline = true # blank line between commands
 format = """
 $directory\
 $git_branch\
+$git_status\
 $fill\
 $time\
 $line_break\
@@ -25,9 +26,17 @@ style = "bold cyan"
 format = "[$path]($style)[$read_only]($read_only_style) "
 
 [git_branch]
-symbol = " "
+symbol = " " # Nerd Font branch glyph
 style = "bold purple"
 format = "on [$symbol$branch]($style) "
+
+# After the branch: ! modified, ? untracked (both: !?), + staged; hidden when clean
+[git_status]
+modified = "!"
+untracked = "?"
+staged = "+"
+style = "bold red"
+format = "([$all_status$ahead_behind]($style) )"
 
 # Pushes the time to the far right of the first line
 [fill]
