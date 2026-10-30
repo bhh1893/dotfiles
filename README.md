@@ -81,7 +81,7 @@ brew install gh
 Clone this repo:
 
 ```bash
-git clone https://github.com/bhh1893/my_setup_bhh.git ~/dotfiles
+git clone https://github.com/bhh1893/dotfiles.git ~/dotfiles
 ```
 
 Copy the config into place:
