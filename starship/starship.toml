@@ -1,0 +1,44 @@
+# ~/.config/starship.toml
+# Copy into place: cp ~/dotfiles/starship/starship.toml ~/.config/starship.toml
+#
+# ~/full/path/to/dir on  branch                                   14:32
+# >
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = true # blank line between commands
+
+format = """
+$directory\
+$git_branch\
+$fill\
+$time\
+$line_break\
+$character"""
+
+# Full path from ~ (no shortening, even inside a git repo)
+[directory]
+truncation_length = 100
+truncate_to_repo = false
+style = "bold cyan"
+format = "[$path]($style)[$read_only]($read_only_style) "
+
+[git_branch]
+symbol = " "
+style = "bold purple"
+format = "on [$symbol$branch]($style) "
+
+# Pushes the time to the far right of the first line
+[fill]
+symbol = " "
+
+[time]
+disabled = false
+time_format = "%H:%M"
+style = "dimmed white"
+format = "[$time]($style)"
+
+# Green > after a successful command, red > after a failed one
+[character]
+success_symbol = "[>](bold green)"
+error_symbol = "[>](bold red)"

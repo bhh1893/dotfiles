@@ -41,6 +41,8 @@ Searches cover the folder you started `nvim` in (`:pwd`) and everything below it
 | `f` / `F` + char | Jump to the next / previous char, across lines. Press `f` again to repeat |
 | `t` / `T` + char | Same, stopping just before / after it |
 | `r` after an operator | Remote: `yr` + label + `iw` copies a word elsewhere without moving |
+| `R` after an operator / in visual | Treesitter search: pick a code block around a match |
+| Ctrl+s while in `/` search | Toggle flash labels on the search matches |
 | `[i` / `]i` | Start / end of the current indent block |
 | `]c` / `[c` | Next / previous git change |
 | `]d` / `[d` | Next / previous error or warning |
@@ -130,6 +132,79 @@ Python: basedpyright + ruff. Java: jdtls. Treesitter, basedpyright and Java need
 | `git reflog` | Find "lost" commits |
 
 Diffs show through delta.
+
+## tmux
+
+Prefix is **Ctrl+Space**: press it, let go, then the key. The session name in the top bar turns purple while the prefix is active.
+
+| Keys | Action |
+|---|---|
+| prefix `\|` / prefix `-` | Split side by side / top and bottom (same folder) |
+| prefix `h` `j` `k` `l` | Move to the pane left / below / above / right |
+| prefix `H` `J` `K` `L` | Resize the pane (keep tapping `H`/`J`/`K`/`L` without the prefix) |
+| prefix `q`, then a number | Jump to pane N (numbers also show on each pane's top border) |
+| prefix `z` | Zoom the pane full screen and back |
+| prefix `x` | Close the pane |
+| prefix `c` | New window (same folder) |
+| prefix `1`–`9` | Go to window N |
+| prefix `n` / `p` | Next / previous window |
+| prefix `,` | Rename the window |
+| prefix `[` | Copy mode: move with Vim keys, `v` select, `y` copy, `q` quit |
+| prefix `d` | Detach (the session keeps running) |
+| prefix `s` | List and switch sessions |
+| prefix `r` | Reload the config |
+| prefix `?` | All key bindings |
+
+| Command | Action |
+|---|---|
+| `tmux new -s name` | New session called `name` |
+| `tmux a` / `tmux a -t name` | Reattach to the last / a named session |
+| `tmux ls` | List sessions |
+
+Neovim keys are untouched: Ctrl+hjkl still resizes Neovim windows and `<leader>hjkl` still moves between them, because every tmux key starts with the prefix.
+
+## Terminal tools
+
+| Keys / command | Action |
+|---|---|
+| → (right arrow) / Alt+f | Accept the grey suggestion / just its next word |
+| Ctrl+r | fzf: fuzzy-search shell history |
+| Ctrl+t | fzf: pick files (with a bat preview) and paste them into the command |
+| Alt+c | fzf: pick a folder (with a tree preview) and `cd` into it |
+| `nvim $(fzf)` | Open a fuzzy-picked file in Neovim |
+| `ls` / `ll` / `la` | eza: list / long list with git status / include hidden |
+| `lt` | eza: tree two levels deep |
+| `cat file` | bat: print with syntax highlighting |
+| `bat file` | bat: same, with paging for long files |
+| `man git` | Man pages, colored by bat |
+| `fd name` | Find files by name (skips hidden and git-ignored) |
+| `rg text` | Search inside files |
+| `git diff` / `git show` | Diffs through delta (`n` / `N` jump between files) |
+
+In fzf: type to filter · Ctrl+j / Ctrl+k move · Enter pick · Tab select several (Ctrl+t) · Esc cancel
+
+**`**` + Tab** fuzzy-completes the argument of any command, with a preview:
+
+| Example | Picks |
+|---|---|
+| `nvim **`Tab | A file (bat preview) |
+| `cd **`Tab | A folder (tree preview) |
+| `export **`Tab / `unset **`Tab | An environment variable (shows its value) |
+| `ssh **`Tab | A host |
+
+**fzf-git** (Ctrl+g, then a second key, in a git repo):
+
+| Keys | Picks |
+|---|---|
+| Ctrl+g Ctrl+f | Changed files |
+| Ctrl+g Ctrl+b | Branches |
+| Ctrl+g Ctrl+h | Commits (hashes) |
+| Ctrl+g Ctrl+t | Tags |
+| Ctrl+g Ctrl+r | Remotes |
+| Ctrl+g Ctrl+s | Stashes |
+| Ctrl+g Ctrl+l | Reflog |
+
+The pick is pasted into the command line, e.g. `git switch ` + Ctrl+g Ctrl+b.
 
 ## Other
 
