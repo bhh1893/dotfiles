@@ -30,11 +30,12 @@ symbol = " " # Nerd Font branch glyph
 style = "bold purple"
 format = "on [$symbol$branch]($style) "
 
-# After the branch: ! modified, ? untracked (both: !?), + staged; hidden when clean
+# After the branch: ! modified, ? untracked (both: !?), + staged; hidden when clean (stashes not shown)
 [git_status]
 modified = "!"
 untracked = "?"
 staged = "+"
+stashed = "" # no $ for stashes
 style = "bold red"
 format = "([$all_status$ahead_behind]($style) )"
 
@@ -45,7 +46,7 @@ symbol = " "
 [time]
 disabled = false
 time_format = "%H:%M"
-style = "dimmed white"
+style = "white"
 format = "[$time]($style)"
 
 # Green > after a successful command, red > after a failed one

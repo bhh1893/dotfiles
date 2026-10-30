@@ -164,7 +164,7 @@ Prefix is **Ctrl+Space**: press it, let go, then the key. The session name in th
 | `tmux a` / `tmux a -t name` | Reattach to the last / a named session |
 | `tmux ls` | List sessions |
 | `ta` | Attach and pick a running session from the list |
-| `tmux-sessionizer` | Sessionizer from a plain shell; `tmux-sessionizer ~/code` searches another folder |
+| `ts` | Sessionizer from a plain shell; `ts ~/code` searches another folder |
 
 Neovim keys are untouched: Ctrl+hjkl still resizes Neovim windows and `<leader>hjkl` still moves between them, because every tmux key starts with the prefix.
 

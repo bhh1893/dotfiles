@@ -14,6 +14,8 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Attach to tmux and pick a running session from the list
 alias ta='tmux attach \; choose-tree -Zs'
+# Pick a project folder and open its tmux session (made if needed)
+alias ts='tmux-sessionizer'
 
 # Colored output from macOS's built-in tools (ls, etc.)
 export CLICOLOR=1
