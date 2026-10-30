@@ -10,6 +10,7 @@ return {
       require('mini.pairs').setup()    -- auto-close brackets and quotes
       require('mini.move').setup()     -- Alt + hjkl to move lines / selections
       require('mini.surround').setup() -- sa / sd / sr to add, delete, replace surroundings
+      require('mini.icons').setup()    -- file and language icons (used by render-markdown)
     end,
   },
 }
