@@ -35,10 +35,27 @@ setopt hist_verify
 autoload -Uz compinit && compinit
 zmodload zsh/complist
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # Tab completion ignores case
 
 # Grey suggestions from history as you type; → accepts, Alt+f accepts a word
 [ -f "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ] && \
   source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
+# Case-insensitive history suggestions: typing "GIT st" suggests "git status".
+# Walks history newest-first comparing lowercased text (no patterns, so * [ ] etc.
+# are safe); the suggestion keeps what you typed and adds the rest of the entry.
+_zsh_autosuggest_strategy_history_ci() {
+  emulate -L zsh
+  local typed=${(L)1} n entry
+  for n in ${(Onk)history}; do
+    entry=${history[$n]}
+    if [[ ${(L)entry[1,${#1}]} == "$typed" ]]; then
+      typeset -g suggestion="$1${entry:${#1}}"
+      return
+    fi
+  done
+}
+ZSH_AUTOSUGGEST_STRATEGY=(history_ci)
 
 # ---- FZF -----
 

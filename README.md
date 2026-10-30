@@ -167,10 +167,22 @@ Or link it:
 mkdir -p ~/.config/tmux && ln -sf ~/dotfiles/tmux/tmux.conf ~/.config/tmux/tmux.conf
 ```
 
-Start a session:
+Put the sessionizer on your PATH (prefix f: pick a project folder, switch to its session):
 
 ```bash
-tmux new -s main
+mkdir -p ~/.local/bin && cp ~/dotfiles/tmux/tmux-sessionizer ~/.local/bin/ && chmod +x ~/.local/bin/tmux-sessionizer
+```
+
+Or link it:
+
+```bash
+mkdir -p ~/.local/bin && ln -sf ~/dotfiles/tmux/tmux-sessionizer ~/.local/bin/tmux-sessionizer && chmod +x ~/dotfiles/tmux/tmux-sessionizer
+```
+
+Start tmux in the folder that holds your projects; prefix f then lists that folder and every project in it:
+
+```bash
+cd ~/code && tmux
 ```
 
 ## 7. lazygit

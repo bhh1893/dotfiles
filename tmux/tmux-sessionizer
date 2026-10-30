@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# ~/.local/bin/tmux-sessionizer
+# Pick a folder with fzf, then switch to its tmux session (created first if needed).
+# Lists the folder the current session started in (".") and its subfolders, so
+# run `tmux` in your projects folder and every project in it is one pick away.
+# Search somewhere else once: tmux-sessionizer ~/code
+
+if [ -n "$1" ]; then
+  root=$1
+elif [ -n "$TMUX" ]; then
+  # Sessions made here remember their root, so picking b from inside a still lists a
+  root=$(tmux show-option -qv @sessionizer_root)
+  [ -z "$root" ] && root=$(tmux display-message -p '#{session_path}')
+else
+  root=$PWD
+fi
+root=${root%/}
+
+pick=$( { echo .; find "$root" -mindepth 1 -maxdepth 1 -type d ! -name '.*' -exec basename {} \; | sort; } \
+  | fzf --prompt "session> " --reverse) || exit 0
+
+if [ "$pick" = . ]; then dir=$root; else dir=$root/$pick; fi
+
+# tmux session names can't contain . or :
+name=$(basename "$dir" | tr .: __)
+
+# "=name" matches the session exactly, so "api" never lands in "api-v2"
+if ! tmux has-session -t "=$name" 2>/dev/null; then
+  tmux new-session -ds "$name" -c "$dir"
+  tmux set-option -t "=$name" @sessionizer_root "$root"
+fi
+
+if [ -n "$TMUX" ]; then
+  tmux switch-client -t "=$name"
+else
+  tmux attach-session -t "=$name"
+fi

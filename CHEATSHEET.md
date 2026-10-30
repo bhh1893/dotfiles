@@ -144,13 +144,16 @@ Prefix is **Ctrl+Space**: press it, let go, then the key. The session name in th
 | prefix `H` `J` `K` `L` | Resize the pane (keep tapping `H`/`J`/`K`/`L` without the prefix) |
 | prefix `q`, then a number | Jump to pane N (numbers also show on each pane's top border) |
 | prefix `z` | Zoom the pane full screen and back |
-| prefix `x` | Close the pane |
+| prefix `x` | Close the pane (no prompt) |
+| prefix `&` | Close the window (asks first) |
 | prefix `c` | New window (same folder) |
 | prefix `1`–`9` | Go to window N |
 | prefix `n` / `p` | Next / previous window |
 | prefix `,` | Rename the window |
 | prefix `[` | Copy mode: move with Vim keys, `v` select, `y` copy, `q` quit |
 | prefix `d` | Detach (the session keeps running) |
+| prefix `f` | Sessionizer: pick a project folder, switch to its session (made if needed) |
+| prefix `Tab` | Back to the previous session |
 | prefix `s` | List and switch sessions |
 | prefix `r` | Reload the config |
 | prefix `?` | All key bindings |
@@ -160,6 +163,7 @@ Prefix is **Ctrl+Space**: press it, let go, then the key. The session name in th
 | `tmux new -s name` | New session called `name` |
 | `tmux a` / `tmux a -t name` | Reattach to the last / a named session |
 | `tmux ls` | List sessions |
+| `tmux-sessionizer` | Sessionizer from a plain shell; `tmux-sessionizer ~/code` searches another folder |
 
 Neovim keys are untouched: Ctrl+hjkl still resizes Neovim windows and `<leader>hjkl` still moves between them, because every tmux key starts with the prefix.
 
