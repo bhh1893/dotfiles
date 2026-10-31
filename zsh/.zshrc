@@ -135,6 +135,13 @@ alias ll="eza -l --icons=always --git --group-directories-first"
 alias la="eza -la --icons=always --git --group-directories-first"
 alias lt="eza --tree --level=2 --icons=always"
 
+# ---- Zoxide (smarter cd) -----
+
+# cd jumps to frecent folders by name (cd dot → ~/dotfiles); cdi picks with fzf.
+# Real paths still work like plain cd. Must come after compinit.
+export _ZO_FZF_OPTS="$FZF_DEFAULT_OPTS --height=45% --layout=reverse --preview 'eza --tree --level=2 --color=always {2..}'"
+eval "$(zoxide init zsh --cmd cd)"
+
 # ---- Prompt -----
 
 eval "$(starship init zsh)"

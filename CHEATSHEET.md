@@ -176,6 +176,11 @@ Neovim keys are untouched: Ctrl+hjkl still resizes Neovim windows and `<leader>h
 | Ctrl+r | fzf: fuzzy-search shell history |
 | Ctrl+t | fzf: pick files (with a bat preview) and paste them into the command |
 | Alt+c | fzf: pick a folder (with a tree preview) and `cd` into it |
+| `cd name` | zoxide: jump to the best-ranked folder you've visited matching "name" (`cd code api` narrows it) |
+| `cdi name` | zoxide: pick from every matching folder with fzf |
+| `cd name` + Space + Tab | zoxide: same fzf picker from tab completion |
+| `cd -` | Back to the previous folder |
+| `zoxide remove path` | Forget a folder (moved or deleted repo) |
 | `nvim $(fzf)` | Open a fuzzy-picked file in Neovim |
 | `ls` / `ll` / `la` | eza: list / long list with git status / include hidden |
 | `lt` | eza: tree two levels deep |

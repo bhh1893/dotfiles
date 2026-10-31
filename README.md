@@ -28,7 +28,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 Editor, git tools and terminal tools:
 
 ```bash
-brew install neovim git lazygit git-delta ripgrep fd fzf bat eza starship tmux zsh-autosuggestions zsh-syntax-highlighting
+brew install neovim git lazygit git-delta ripgrep fd fzf bat eza zoxide starship tmux zsh-autosuggestions zsh-syntax-highlighting
 ```
 
 | Tool | What it's for |
@@ -42,6 +42,7 @@ brew install neovim git lazygit git-delta ripgrep fd fzf bat eza starship tmux z
 | `fzf` | Fuzzy finder for the shell: history, files, folders |
 | `bat` | `cat` with syntax highlighting and line numbers |
 | `eza` | `ls` with icons, colors, git status and a tree view |
+| `zoxide` | Smarter `cd`: jumps to folders you visit often by part of their name |
 | `starship` | Shell prompt showing git branch and status |
 | `tmux` | Terminal multiplexer: split panes, windows, sessions that survive closing the terminal |
 | `zsh-autosuggestions` | Grey suggestions from your history as you type |
