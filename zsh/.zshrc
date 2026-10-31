@@ -125,7 +125,7 @@ _fzf_comprun() {
 
 export BAT_THEME=tokyonight_night
 
-alias cat="bat --paging=never"
+alias cat="bat -pp"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 # ---- Eza (better ls) -----

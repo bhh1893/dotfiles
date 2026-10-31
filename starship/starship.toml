@@ -35,7 +35,7 @@ format = "on [$symbol$branch]($style) "
 modified = "!"
 untracked = "?"
 staged = "+"
-stashed = "" # no $ for stashes
+stashed = "=" # no $ for stashes
 style = "bold red"
 format = "([$all_status$ahead_behind]($style) )"
 
