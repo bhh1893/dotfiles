@@ -17,6 +17,14 @@ alias ta='tmux attach \; choose-tree -Zs'
 # Pick a project folder and open its tmux session (made if needed)
 alias ts='tmux-sessionizer'
 
+# Claude Code (cl, not cc: cc is the C compiler)
+alias cl='claude'
+alias clc='claude --continue'      # pick up the last session in this folder
+alias clr='claude --resume'        # choose an earlier session to resume
+alias clo='claude --model opus'    # hard problems: design, tricky bugs, big refactors
+alias clh='claude --model haiku'   # quick questions and small edits
+alias clp='claude -p'              # one-shot answer, no session: clp "explain this" < file
+
 # Colored output from macOS's built-in tools (ls, etc.)
 export CLICOLOR=1
 
@@ -141,6 +149,17 @@ alias lt="eza --tree --level=2 --icons=always"
 # Real paths still work like plain cd. Must come after compinit.
 export _ZO_FZF_OPTS="$FZF_DEFAULT_OPTS --height=45% --layout=reverse --preview 'eza --tree --level=2 --color=always {2..}'"
 eval "$(zoxide init zsh --cmd cd)"
+
+# ---- Yazi (file manager) -----
+
+# y opens yazi; quitting with q leaves the shell in the folder you browsed to (Q doesn't)
+function y() {
+	local tmp cwd; tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	command yazi "$@" --cwd-file="$tmp"
+	IFS= read -r -d '' cwd < "$tmp"
+	[ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd" || builtin true
+	command rm -f -- "$tmp"
+}
 
 # ---- Prompt -----
 

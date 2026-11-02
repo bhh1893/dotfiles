@@ -22,7 +22,8 @@ Open this file in Neovim to see it rendered (`<leader>m` toggles the raw view).
 | `<leader>/` | Search text inside files |
 | `<leader>b` | Open buffers |
 | `<leader>e` | oil: edit the directory like text |
-| `<leader>t` | File tree sidebar |
+| `<leader>t` | File tree sidebar (shows dotfiles; `H` toggles hidden, `I` toggles git-ignored) |
+| `<leader>y` / `<leader>Y` | yazi float at the current file / project root (image and PDF previews) |
 
 Searches cover the folder you started `nvim` in (`:pwd`) and everything below it, skipping hidden and git-ignored files.
 
@@ -168,6 +169,54 @@ Prefix is **Ctrl+Space**: press it, let go, then the key. The session name in th
 
 Neovim keys are untouched: Ctrl+hjkl still resizes Neovim windows and `<leader>hjkl` still moves between them, because every tmux key starts with the prefix.
 
+## Herdr
+
+Same model as tmux with no prefix: space = session, tab = window, pane = pane. Alt + the letter you'd press after the tmux prefix; panes move with Ctrl+Shift so Alt+hjkl stays with mini.move in Neovim.
+
+| Herdr | tmux equivalent | Action |
+|---|---|---|
+| Ctrl+Shift `h` `j` `k` `l` | prefix `h` `j` `k` `l` | Move to the pane left / below / above / right |
+| Alt+Shift `h` `j` `k` `l` | (none) | Swap the pane in that direction |
+| Alt+`\` / Alt+`-` | prefix `\|` / prefix `-` | Split side by side / top and bottom |
+| Alt+`x` | prefix `x` | Close the pane (no prompt) |
+| Alt+`z` | prefix `z` | Zoom the pane and back |
+| Alt+`t` | prefix `c` | New tab |
+| Alt+`1`–`9` | prefix `1`–`9` | Go to tab N |
+| Alt+`]` / Alt+`[` | prefix `n` / `p` | Next / previous tab |
+| Alt+`s` | prefix `s` / prefix `f` | Picker: fuzzy-find a tab in any space, or start new work |
+| Alt+`n` | prefix `f` | New space |
+| Ctrl+`1`–`9` | (none) | Go to space N |
+| Ctrl+Shift+P | prefix `:` | Command palette |
+| Ctrl+Shift+B | (none) | Toggle the spaces sidebar |
+
+No pane resizing from the keyboard (drag the divider), no previous-space toggle and no copy mode (select with the mouse, Ctrl+Shift+C copies). Closing the window doesn't stop anything: terminals keep running in herdr-core, like tmux detach.
+
+## WezTerm
+
+Scrollback only works for programs running straight in WezTerm; inside tmux use prefix `[`.
+
+| Keys | Action |
+|---|---|
+| Shift+↑ / Shift+↓ | Scroll one line |
+| Shift+PageUp / Shift+PageDown | Scroll a page |
+| Ctrl+Shift+F | Search the scrollback (Enter / Shift+Enter: next / previous) |
+| Ctrl+Shift+X | Copy mode: `hjkl` `w` `b` move, Ctrl+u / Ctrl+d half page, `v` / `V` select, `y` copy, Esc quit |
+
+## Yazi
+
+`y` in the shell or `<leader>y` in Neovim. Previews show on the right as you move.
+
+| Keys | Action |
+|---|---|
+| `h` / `l`, `j` / `k` | Parent folder / enter folder or open file, down / up |
+| Enter | Open the file (in Neovim when opened from Neovim) |
+| `.` | Show / hide dotfiles |
+| `z` / `Z` | Jump with zoxide / with fzf |
+| Space, `y`, `x`, `p` | Select, copy, cut, paste |
+| `a` / `r` / `d` | Create / rename / move to trash |
+| `q` / `Q` | Quit and `cd` there (shell `y` only) / quit without moving |
+| `F1` or `~` | All keys |
+
 ## Terminal tools
 
 | Keys / command | Action |
@@ -215,6 +264,26 @@ In fzf: type to filter · Ctrl+j / Ctrl+k move · Enter pick · Tab select sever
 | Ctrl+g Ctrl+l | Reflog |
 
 The pick is pasted into the command line, e.g. `git switch ` + Ctrl+g Ctrl+b.
+
+## Claude Code
+
+| Command | Action |
+|---|---|
+| `cl` | Start Claude Code in the current folder |
+| `clc` | Continue the last session in this folder |
+| `clr` | Pick an earlier session to resume |
+| `clo` / `clh` | Start with Opus (hard problems) / Haiku (quick things) |
+| `clp "question"` | One-shot answer, no session (`clp "explain" < file`) |
+
+| Inside Claude Code | Action |
+|---|---|
+| Shift+Tab | Cycle modes: normal → auto-accept edits → plan mode |
+| Esc / Esc Esc | Interrupt / rewind to an earlier message |
+| `@file` | Point at a file |
+| `!cmd` | Run a shell command yourself; output goes into the chat |
+| `/model` | Switch model mid-session |
+| `/clear` / `/compact` | Fresh context / summarize a long session |
+| `/memory` | Edit memory files (personal instructions live in `claude/AGENTS.md`) |
 
 ## Other
 

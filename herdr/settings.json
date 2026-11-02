@@ -1,0 +1,9 @@
+{
+  "theme": "iceberg",
+  "font": "Hack Nerd Font",
+  "font_size": 14,
+  "option_as_alt": "on",
+  "sounds": {
+    "enabled": true
+  }
+}
