@@ -40,6 +40,7 @@ Searches cover the folder you started `nvim` in (`:pwd`) and everything below it
 | `S` + label | Select a Treesitter node (function, block, …) |
 | `f` / `F` + char | Jump to the next / previous char, across lines. Press `f` again to repeat |
 | `t` / `T` + char | Same, stopping just before / after it |
+| Esc | Clear search highlights (`:noh`) |
 | `r` after an operator | Remote: `yr` + label + `iw` copies a word elsewhere without moving |
 | `R` after an operator / in visual | Treesitter search: pick a code block around a match |
 | Ctrl+s while in `/` search | Toggle flash labels on the search matches |

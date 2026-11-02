@@ -25,22 +25,23 @@ resize_mode = ""
 
 # Splits
 split_vertical = "prefix+|"
-split_horizontal = "prefix+|"
+split_horizontal = "prefix+minus"
 close_pane = "prefix+x"
 zoom = "prefix+z"
 
-# Sessions
+# Workspaces
 next_workspace = "prefix+shift+j"
 previous_workspace = "prefix+shift+k"
 new_workspace = "prefix+t"
-toggle_sidebar = "prefix+b"
-goto = "prefix+f"
-# workspace_picker = "prefix+s"
-last_pane = "prefix+tab"
-cycle_pane_next = ""
-cycle_pane_previous = ""
 
-reload_config = "prefix-r"
+# Agents
+previous_agent = "prefix+shift+l"
+next_agent = "prefix+shift+h"
+
+# herdr
+goto = "prefix+f"
+toggle_sidebar = "prefix+b"
+reload_config = "prefix+r"
 edit_scrollback = "prefix+["
 
 [terminal]

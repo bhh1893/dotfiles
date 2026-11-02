@@ -1,7 +1,10 @@
 return {
   "folke/flash.nvim",
   event = "VeryLazy",
-  opts = {},
+  opts = {
+    -- f/t/F/T: no dimming of the rest of the text (s and S keep it)
+    modes = { char = { highlight = { backdrop = false } } },
+  },
   keys = {
     { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
     { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },

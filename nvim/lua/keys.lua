@@ -22,3 +22,6 @@ vim.keymap.set('n', '<C-a>', 'ggVG', { desc = 'Select All' })
 
 -- pasting over a selection no longer clobbers your clipboard
 vim.cmd([[ xnoremap <expr> p 'pgv"'.v:register.'y' ]])
+
+-- Esc in normal mode also clears search highlights (:noh); nvim's default Ctrl+l does it too, but Ctrl+l resizes here
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<cr><Esc>', { desc = 'Clear search highlight' })
