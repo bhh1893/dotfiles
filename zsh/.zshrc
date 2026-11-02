@@ -7,6 +7,7 @@
 # Config files in ~/.config (lazygit looks in ~/Library/Application Support otherwise)
 export XDG_CONFIG_HOME="$HOME/.config"
 export EDITOR="nvim"
+bindkey -e
 alias vim="nvim"
 
 # Personal scripts (tmux-sessionizer lives here)
@@ -22,6 +23,7 @@ alias cl='claude'
 alias clc='claude --continue'      # pick up the last session in this folder
 alias clr='claude --resume'        # choose an earlier session to resume
 alias clo='claude --model opus'    # hard problems: design, tricky bugs, big refactors
+alias cls='claude --model sonnet'    # hard problems: design, tricky bugs, big refactors
 alias clh='claude --model haiku'   # quick questions and small edits
 alias clp='claude -p'              # one-shot answer, no session: clp "explain this" < file
 

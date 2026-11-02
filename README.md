@@ -311,27 +311,25 @@ mkdir -p ~/.config && ln -s ~/dotfiles/wezterm ~/.config/wezterm
 
 ## 12. Herdr
 
-Herdr is a desktop app for terminals and coding agents: spaces, tabs and panes, like tmux sessions, windows and panes. Use one or the other per project; tmux stays set up. `herdr/` holds the keys (tmux-style, see the cheat sheet), an Iceberg theme and the settings.
+Herdr (the TUI) is a terminal workspace manager for coding agents, with a prefix key like tmux: workspaces, tabs and panes. Use it or tmux per project; tmux stays set up. `herdr/mac_keys.json` holds its config in TOML: Ctrl+Space prefix with tmux-style keys and Iceberg colors.
 
-Link the keys and theme (Herdr reloads them live), and copy the settings, since Herdr writes to that file itself (zoom keys, settings window):
+Install it:
 
 ```bash
-mkdir -p ~/.config/herdr-app/themes
-ln -sf ~/dotfiles/herdr/keys.json ~/.config/herdr-app/keys.json
-ln -sf ~/dotfiles/herdr/themes/iceberg.json ~/.config/herdr-app/themes/iceberg.json
-cp ~/dotfiles/herdr/settings.json ~/.config/herdr-app/settings.json
+brew install herdr
 ```
 
-macOS settings for Herdr's keys:
+Link the config (Herdr reads `~/.config/herdr/config.toml`):
 
-- **Option as Alt:** `herdr/settings.json` sets `option_as_alt` to `on`, so Option+key reaches Herdr and terminal programs as Alt (Option no longer types é, ü, …).
-- **Ctrl+1–9 for spaces:** turn off "Switch to Desktop 1–9" in System Settings → Keyboard → Keyboard Shortcuts → Mission Control, or macOS takes those keys before Herdr sees them.
+```bash
+mkdir -p ~/.config/herdr && ln -sf ~/dotfiles/herdr/mac_keys.json ~/.config/herdr/config.toml
+```
 
-If a file is invalid, Herdr keeps the last good version and writes the reason to `~/.config/herdr-app/keys.error` (or `settings.error`).
+After editing, apply it with `herdr server reload-config` (a few settings need a restart).
 
 ## 13. Yazi
 
-Terminal file manager with previews for images, video, PDFs and archives. In Neovim it opens in a float (`<leader>y`); in the shell, `y` (from `.zshrc`) leaves you in the folder you browsed to when you quit with `q`.
+Terminal file manager with previews for images, video, PDFs and archives. Start it with `y` (from `.zshrc`): quitting with `q` leaves you in the folder you browsed to. It isn't wired into Neovim: Neovim's built-in terminal can't show images, so previews only work in yazi run straight in WezTerm.
 
 Install yazi and its preview helpers (fd, ripgrep, fzf and zoxide are already in step 2):
 
@@ -343,43 +341,4 @@ brew install yazi ffmpeg-full sevenzip jq poppler resvg imagemagick-full
 brew link ffmpeg-full imagemagick-full -f --overwrite
 ```
 
-Images preview in WezTerm out of the box. Neovim installs `yazi.nvim` on its next start; `:checkhealth yazi` checks the setup.
-
-## Windows
-
-Neovim reads its config from `%LOCALAPPDATA%\nvim` unless the `XDG_CONFIG_HOME` user environment variable points at `C:\Users\<you>\.config`. Link the repo's config into place with a directory junction:
-
-```powershell
-cmd /c mklink /J "$env:USERPROFILE\.config\nvim" "$env:USERPROFILE\Desktop\Work\dotfiles\nvim"
-```
-
-Claude Code reads `%USERPROFILE%\.claude\CLAUDE.md`. Point it at the repo's `AGENTS.md`:
-
-```powershell
-New-Item -ItemType Directory -Force "$env:USERPROFILE\.claude" | Out-Null
-Set-Content -Encoding utf8 "$env:USERPROFILE\.claude\CLAUDE.md" '@~/Desktop/Work/dotfiles/claude/AGENTS.md'
-```
-
-WezTerm: install it, then link the config folder (WezTerm reads `%USERPROFILE%\.config\wezterm\wezterm.lua` on Windows too). It opens PowerShell and uses its bundled JetBrains Mono, so Hack Nerd Font is optional:
-
-```powershell
-winget install wez.wezterm
-cmd /c mklink /J "$env:USERPROFILE\.config\wezterm" "$env:USERPROFILE\Desktop\Work\dotfiles\wezterm"
-```
-
-Herdr: file symlinks need Developer Mode (Settings → System → For developers) or an admin shell. Without it, copy the files, and copy again after pulling changes:
-
-```powershell
-$h = "$env:USERPROFILE\.config\herdr-app"; $d = "$env:USERPROFILE\Desktop\Work\dotfiles\herdr"
-New-Item -ItemType Directory -Force "$h\themes" | Out-Null
-Copy-Item "$d\keys.json" "$h\keys.json"; Copy-Item "$d\themes\iceberg.json" "$h\themes\iceberg.json"
-```
-
-Merge `herdr\settings.json` into `$h\settings.json` by hand, so machine-specific values like `zoom` stay.
-
-Yazi: install it and its preview helpers, then point `YAZI_FILE_ONE` at Git for Windows' `file.exe` (yazi needs it to detect file types) and restart the terminal:
-
-```powershell
-winget install sxyazi.yazi Gyan.FFmpeg 7zip.7zip jqlang.jq oschwartz10612.Poppler ImageMagick.ImageMagick
-[Environment]::SetEnvironmentVariable("YAZI_FILE_ONE", "C:\Program Files\Git\usr\bin\file.exe", "User")
-```
+Images preview in WezTerm out of the box. `ya env` shows which image method yazi picked; `Chafa` there means the terminal isn't passing images through.

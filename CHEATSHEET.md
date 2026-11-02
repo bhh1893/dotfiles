@@ -23,7 +23,6 @@ Open this file in Neovim to see it rendered (`<leader>m` toggles the raw view).
 | `<leader>b` | Open buffers |
 | `<leader>e` | oil: edit the directory like text |
 | `<leader>t` | File tree sidebar (shows dotfiles; `H` toggles hidden, `I` toggles git-ignored) |
-| `<leader>y` / `<leader>Y` | yazi float at the current file / project root (image and PDF previews) |
 
 Searches cover the folder you started `nvim` in (`:pwd`) and everything below it, skipping hidden and git-ignored files.
 
@@ -204,12 +203,12 @@ Scrollback only works for programs running straight in WezTerm; inside tmux use 
 
 ## Yazi
 
-`y` in the shell or `<leader>y` in Neovim. Previews show on the right as you move.
+`y` in the shell (run it in WezTerm, not inside Neovim, for image and PDF previews). Previews show on the right as you move.
 
 | Keys | Action |
 |---|---|
 | `h` / `l`, `j` / `k` | Parent folder / enter folder or open file, down / up |
-| Enter | Open the file (in Neovim when opened from Neovim) |
+| Enter | Open the file in `$EDITOR` (Neovim) |
 | `.` | Show / hide dotfiles |
 | `z` / `Z` | Jump with zoxide / with fzf |
 | Space, `y`, `x`, `p` | Select, copy, cut, paste |

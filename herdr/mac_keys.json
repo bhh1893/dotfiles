@@ -1,0 +1,47 @@
+onboarding = false
+
+[theme.custom]
+panel_bg = "#161821"
+sidebar_bg = "#1e2132"
+active_row_bg = "#272c42"
+selection_bg = "#272c42"
+accent = "#84a0c6"
+green = "#b4be82"
+red = "#e27878"
+
+[ui]
+accent = ""
+prompt_new_tab_name = false
+
+[keys]
+prefix = "ctrl+space"
+
+# Panes
+focus_pane_left = "prefix+h"
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = "prefix+l"
+resize_mode = ""
+
+# Splits
+split_vertical = "prefix+|"
+split_horizontal = "prefix+|"
+close_pane = "prefix+x"
+zoom = "prefix+z"
+
+# Sessions
+next_workspace = "prefix+shift+j"
+previous_workspace = "prefix+shift+k"
+new_workspace = "prefix+t"
+toggle_sidebar = "prefix+b"
+goto = "prefix+f"
+# workspace_picker = "prefix+s"
+last_pane = "prefix+tab"
+cycle_pane_next = ""
+cycle_pane_previous = ""
+
+reload_config = "prefix-r"
+edit_scrollback = "prefix+["
+
+[terminal]
+new_cwd = "follow"
