@@ -13,6 +13,9 @@ red = "#e27878"
 accent = ""
 prompt_new_tab_name = false
 
+[ui.sidebar.agents]
+rows = [["state_icon", "machine", "workspace", "tab"], ["terminal_title_stripped"]]
+
 [keys]
 prefix = "ctrl+space"
 
