@@ -46,7 +46,17 @@ os_install_packages() {
     fi
   fi
 
-  missing=$(missing_from "$(brew list --cask -1)" "${BREW_CASKS[@]}")
+  # A font installed outside brew would make `brew install --cask` fail, so treat an
+  # existing Hack Nerd Font file as installed
+  local casks=() cask
+  for cask in "${BREW_CASKS[@]}"; do
+    if [ "$cask" = font-hack-nerd-font ] &&
+      { compgen -G "$HOME/Library/Fonts/Hack*Nerd*" || compgen -G "/Library/Fonts/Hack*Nerd*"; } >/dev/null; then
+      continue
+    fi
+    casks+=("$cask")
+  done
+  missing=$(missing_from "$(brew list --cask -1)" "${casks[@]}")
   if [ -n "$missing" ]; then
     log "brew install --cask $(tr '\n' ' ' <<<"$missing")"
     # shellcheck disable=SC2086 # one word per package
