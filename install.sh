@@ -66,7 +66,10 @@ reconcile_pkg() {
       prefix=${prefix:+$prefix/}$comp
       target=$HOME/$prefix
       if [ -L "$target" ]; then
-        if [ "$(resolve "$target")" != "$(resolve "$root/$prefix")" ]; then
+        # Stow only owns relative links; an absolute link from a manual `ln -s` to the
+        # same file still makes stow report a conflict
+        if [ "$(resolve "$target")" != "$(resolve "$root/$prefix")" ] ||
+          [[ "$(readlink "$target")" == /* ]]; then
           back_up "$target"
           NEED_STOW=1
         fi
