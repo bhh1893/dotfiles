@@ -1,5 +1,5 @@
 -- ~/.config/wezterm/wezterm.lua
--- Link the folder: ln -s ~/dotfiles/wezterm ~/.config/wezterm
+-- Linked into place by install.sh (GNU Stow)
 -- Written for macOS; on Windows it falls back to a bundled font and PowerShell.
 
 local wezterm = require('wezterm')
@@ -11,8 +11,8 @@ local is_windows = wezterm.target_triple:find('windows') ~= nil
 -- ---- Look -----
 
 config.color_scheme = 'iceberg-dark' -- matches Neovim, tmux, fzf and starship
--- JetBrains Mono ships with WezTerm (with Nerd Font icons), so Windows works without installing Hack
-config.font = is_mac and wezterm.font('Hack Nerd Font') or wezterm.font('JetBrains Mono')
+-- Windows: JetBrainsMono NF (winget DEVCOM.JetBrainsMonoNerdFont). Plain JetBrains Mono has no icons.
+config.font = is_mac and wezterm.font('Hack Nerd Font') or wezterm.font('JetBrainsMono NF')
 config.font_size = is_mac and 14 or 11
 config.window_padding = { left = 8, right = 8, top = 8, bottom = 4 }
 

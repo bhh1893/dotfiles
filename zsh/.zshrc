@@ -1,6 +1,5 @@
 # ~/.zshrc
-# Copy into place: cp ~/dotfiles/zsh/.zshrc ~/.zshrc
-# or link it:      ln -sf ~/dotfiles/zsh/.zshrc ~/.zshrc
+# Linked into place by install.sh (GNU Stow)
 
 # ---- Environment -----
 
@@ -35,7 +34,16 @@ export CLICOLOR=1
 WORDCHARS=''
 
 # Homebrew's Java (brew doesn't link openjdk onto the PATH)
-export PATH="$(brew --prefix openjdk)/bin:$PATH"
+if command -v brew >/dev/null; then
+  export PATH="$(brew --prefix openjdk)/bin:$PATH"
+fi
+
+# Where zsh-autosuggestions and zsh-syntax-highlighting live (Homebrew or apt)
+if command -v brew >/dev/null; then
+  _zsh_plugins="$(brew --prefix)/share"
+else
+  _zsh_plugins=/usr/share
+fi
 
 # ---- History -----
 
@@ -56,8 +64,8 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # Tab completion ignores case
 
 # Grey suggestions from history as you type; → accepts, Alt+f accepts a word
-[ -f "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ] && \
-  source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+[ -f "$_zsh_plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ] && \
+  source "$_zsh_plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 
 # Case-insensitive history suggestions: typing "GIT st" suggests "git status".
 # Walks history newest-first comparing lowercased text (no patterns, so * [ ] etc.
@@ -108,7 +116,7 @@ _fzf_compgen_dir() {
   fd --type=d --hidden --exclude .git . "$1"
 }
 
-# fzf-git: Ctrl+g key bindings for git objects (clone: see README)
+# fzf-git: Ctrl+g key bindings for git objects (install.sh clones it)
 [ -f ~/fzf-git.sh/fzf-git.sh ] && source ~/fzf-git.sh/fzf-git.sh
 
 show_file_or_dir_preview="if [ -d {} ]; then eza --tree --color=always {} | head -200; else bat -n --color=always --line-range :500 {}; fi"
@@ -170,5 +178,5 @@ eval "$(starship init zsh)"
 # ---- Syntax highlighting (must stay last) -----
 
 # Commands turn green when valid, red when mistyped
-[ -f "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ] && \
-  source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+[ -f "$_zsh_plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ] && \
+  source "$_zsh_plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
