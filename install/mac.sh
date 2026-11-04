@@ -4,7 +4,7 @@
 BREW_FORMULAE=(
   neovim git lazygit git-delta ripgrep fd fzf bat eza zoxide starship tmux
   zsh-autosuggestions zsh-syntax-highlighting stow
-  tree-sitter-cli python openjdk node gh herdr
+  tree-sitter-cli python openjdk gh herdr
   yazi ffmpeg-full sevenzip jq poppler resvg imagemagick-full
 )
 BREW_CASKS=(font-hack-nerd-font wezterm)

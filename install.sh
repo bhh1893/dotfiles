@@ -6,8 +6,6 @@
 #   - idempotent: a second run changes nothing
 #   - prints the line DOTFILES_CHANGED on stdout if (and only if) it changed anything
 #   - exits non-zero on any failure
-#
-# Env: DOTFILES_SKIP_SKILLS=1 skips the agent skills step (for hosts without Node).
 set -euo pipefail
 
 DOTFILES_DIR="$(dirname "$(realpath "$0")")"
@@ -161,38 +159,6 @@ install_bat_theme() {
   fi
 }
 
-# The skills CLI's own restore command (experimental_install) only reads a project
-# skills-lock.json, not the global ~/.agents/.skill-lock.json, so install each lock
-# entry directly. Installs the latest upstream version of each skill, not the pinned hash.
-restore_skills() {
-  if [ "${DOTFILES_SKIP_SKILLS:-0}" = 1 ]; then
-    log "skipping agent skills (DOTFILES_SKIP_SKILLS=1)"
-    return
-  fi
-  local lock=$DOTFILES_DIR/skills/.skill-lock.json entries source name src sources args
-  if ! command -v node >/dev/null || ! command -v npx >/dev/null; then
-    die "node/npx not found: Node.js is required to restore agent skills (or set DOTFILES_SKIP_SKILLS=1)"
-  fi
-  entries=$(node -e '
-    const lock = JSON.parse(require("fs").readFileSync(process.argv[1], "utf8"));
-    for (const [name, s] of Object.entries(lock.skills)) console.log(s.source + "\t" + name);
-  ' "$lock")
-  sources=$(cut -f1 <<<"$entries" | sort -u)
-  while IFS= read -r src; do
-    args=()
-    while IFS=$'\t' read -r source name; do
-      if [ "$source" = "$src" ] && [ ! -e "$HOME/.claude/skills/$name" ]; then
-        args+=(-s "$name")
-      fi
-    done <<<"$entries"
-    if [ "${#args[@]}" -gt 0 ]; then
-      log "installing skills from $src: ${args[*]}"
-      DISABLE_TELEMETRY=1 npx -y skills add "$src" -g -a claude-code -y "${args[@]}"
-      mark_changed
-    fi
-  done <<<"$sources"
-}
-
 # ---- Main -----
 
 export PATH="$HOME/.local/bin:$PATH"
@@ -221,4 +187,3 @@ os_stow
 set_login_shell
 install_fzf_git
 install_bat_theme
-restore_skills

@@ -15,7 +15,7 @@ git clone https://github.com/bhh1893/dotfiles.git ~/dotfiles
 ~/dotfiles/install.sh
 ```
 
-`install.sh` works out of any checkout location. It installs the packages (`apt` on Ubuntu, `brew` on macOS), links the configs with stow, sets zsh as the login shell, fetches the bat theme and fzf-git, and restores the agent skills in `skills/.skill-lock.json` (needs Node.js; on Ubuntu install it first, or set `DOTFILES_SKIP_SKILLS=1` to skip that step).
+`install.sh` works out of any checkout location. It installs the packages (`apt` on Ubuntu, `brew` on macOS), links the configs with stow, sets zsh as the login shell, and fetches the bat theme and fzf-git. Agent skills and a few other things are manual; see [Manual steps after install.sh](#manual-steps-after-installsh).
 
 It never prompts, exits non-zero on failure, and is safe to re-run: a second run changes nothing. It prints `DOTFILES_CHANGED` when a run changed something, which Ansible uses for `changed_when`. If a real file is in the way (Ubuntu ships a `~/.zshrc`), it is moved to `<file>.pre-dotfiles` before linking; stow never runs with `--adopt`.
 
@@ -67,7 +67,7 @@ stow -d ~/dotfiles/herdr -t "$HOME" herdr-common herdr-mac  # nested packages
 | `zsh-autosuggestions` | Grey suggestions from your history as you type |
 | `zsh-syntax-highlighting` | Colors commands as you type: green if valid, red if mistyped |
 
-On macOS `install.sh` also installs `tree-sitter-cli`, `python`, `openjdk` (Treesitter parsers, Python and Java language servers), `node` (for the agent skills), `gh`, the Hack Nerd Font, WezTerm, Herdr and Yazi with its preview helpers. On Ubuntu `fd` and `bat` are installed as `fdfind` and `batcat`; the script links them as `fd` and `bat` in `~/.local/bin`.
+On macOS `install.sh` also installs `tree-sitter-cli`, `python`, `openjdk` (Treesitter parsers, Python and Java language servers), `gh`, the Hack Nerd Font, WezTerm, Herdr and Yazi with its preview helpers. On Ubuntu `fd` and `bat` are installed as `fdfind` and `batcat`; the script links them as `fd` and `bat` in `~/.local/bin`.
 
 ## Notes per tool
 
@@ -89,15 +89,31 @@ cd ~/code && tmux
 
 **Yazi.** Terminal file manager with previews for images, video, PDFs and archives. Start it with `y` (from `.zshrc`): quitting with `q` leaves you in the folder you browsed to. It isn't wired into Neovim: Neovim's built-in terminal can't show images, so previews only work in yazi run straight in WezTerm. Images preview in WezTerm out of the box. `ya env` shows which image method yazi picked; `Chafa` there means the terminal isn't passing images through.
 
-**Claude Code.** Not installed by `install.sh`:
+**Claude Code.** `claude/.claude/CLAUDE.md` holds my personal instructions for coding agents and `claude/.claude/settings.json` my settings; both are linked into `~/.claude`, so every session loads them and edits in the repo apply straight away.
+
+## Manual steps after install.sh
+
+`install.sh` doesn't do these; do them once per machine.
+
+### Claude Code
+
+Install it:
 
 ```bash
 curl -fsSL https://claude.ai/install.sh | bash
 ```
 
-`claude/.claude/CLAUDE.md` holds my personal instructions for coding agents and `claude/.claude/settings.json` my settings; both are linked into `~/.claude`, so every session loads them and edits in the repo apply straight away. Agent skills restore into `~/.agents/skills`, linked into `~/.claude/skills`.
+### Agent skills
 
-## Terminal settings (macOS)
+Needs Node.js (`npx`). `skills/.skill-lock.json` lists the skills; install them into `~/.agents/skills`, linked into `~/.claude/skills`:
+
+```bash
+npx -y skills add mattpocock/skills -g -a claude-code -y \n  -s wayfinder -s grill-me -s grill-with-docs -s to-spec -s to-tickets \n  -s retro -s pr -s grilling -s domain-modeling -s research -s prototype
+```
+
+This installs the latest upstream versions, not the hashes in the lock file.
+
+### Terminal settings (macOS)
 
 Using WezTerm? Its config already sets the font, Option as Alt and Iceberg colors; only the Ctrl+Space step below still applies.
 
@@ -110,7 +126,7 @@ Using WezTerm? Its config already sets the font, Option as Alt and Iceberg color
 - **Ctrl+Space for tmux:** macOS uses Ctrl+Space to switch input sources. Turn it off in System Settings → Keyboard → Keyboard Shortcuts → Input Sources, or tmux never sees it.
 - **Colors (optional):** pick the **Iceberg** (dark) color scheme in your terminal so the shell matches Neovim, fzf and tmux. It's in [iTerm2-Color-Schemes](https://github.com/mbadolato/iTerm2-Color-Schemes), which Ghostty includes.
 
-## Git
+### Git
 
 Your identity for commits:
 
@@ -144,7 +160,7 @@ git config --global alias.lg "log --oneline --graph --all --decorate"
 git config --global alias.st "status -sb"
 ```
 
-## SSH key for GitHub
+### SSH key for GitHub
 
 Create a key:
 
@@ -185,7 +201,7 @@ Check it works (should say `Hi <username>! You've successfully authenticated`):
 ssh -T git@github.com
 ```
 
-## Windows
+### Windows
 
 `install.sh` does not cover Windows. If `~/.claude/CLAUDE.md` on Windows imports `claude/AGENTS.md`, that file moved. Change the import to:
 
