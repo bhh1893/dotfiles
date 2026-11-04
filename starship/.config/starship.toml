@@ -12,10 +12,10 @@ format = """
 $directory\
 $git_branch\
 $git_status\
-$python\
 $fill\
 $time\
 $line_break\
+$python\
 $character"""
 
 # Full path from ~ (no shortening, even inside a git repo)
@@ -54,8 +54,8 @@ format = "[$time]($style)"
 success_symbol = "[>](bold green)"
 error_symbol = "[>](bold red)"
 
-# Shows the active venv name; the env var makes it appear in any folder, not only Python projects
+# Just the venv name before the >, e.g. "(.venv) >"; the env var makes it show in any folder
 [python]
 detect_env_vars = ["VIRTUAL_ENV"]
-format = 'via $symbol(${version} )(($virtualenv) )'
-pyenv_version_name = true
+style = "bold yellow"
+format = '[($virtualenv) ]($style)'
