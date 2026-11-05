@@ -5,6 +5,7 @@
 APT_PACKAGES=(
   zsh tmux neovim ripgrep fd-find bat fzf eza zoxide starship lazygit git-delta stow curl
   zsh-autosuggestions zsh-syntax-highlighting
+  tree-sitter-cli gcc # nvim-treesitter builds parsers with the CLI and a C compiler
 )
 
 os_install_packages() {

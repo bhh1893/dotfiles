@@ -108,7 +108,9 @@ curl -fsSL https://claude.ai/install.sh | bash
 Needs Node.js (`npx`). `skills/.skill-lock.json` lists the skills; install them into `~/.agents/skills`, linked into `~/.claude/skills`:
 
 ```bash
-npx -y skills add mattpocock/skills -g -a claude-code -y \n  -s wayfinder -s grill-me -s grill-with-docs -s to-spec -s to-tickets \n  -s retro -s pr -s grilling -s domain-modeling -s research -s prototype
+npx -y skills add mattpocock/skills -g -a claude-code -y \
+  -s wayfinder -s grill-me -s grill-with-docs -s to-spec -s to-tickets \
+  -s retro -s pr -s grilling -s domain-modeling -s research -s prototype
 ```
 
 This installs the latest upstream versions, not the hashes in the lock file.
