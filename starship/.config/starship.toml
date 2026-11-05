@@ -15,7 +15,6 @@ $git_status\
 $fill\
 $time\
 $line_break\
-$python\
 $character"""
 
 # Full path from ~ (no shortening, even inside a git repo)

@@ -9,11 +9,25 @@ return {
     'folke/snacks.nvim',
     priority = 1000,
     lazy = false,
+    init = function()
+      -- don't dim ignored/hidden paths in pickers; re-apply after colorscheme changes
+      local function undim()
+        for _, g in ipairs { 'PathIgnored', 'PathHidden', 'GitStatusIgnored' } do
+          vim.api.nvim_set_hl(0, 'SnacksPicker' .. g, { link = 'Normal' })
+        end
+      end
+      undim()
+      vim.api.nvim_create_autocmd('ColorScheme', { callback = undim })
+    end,
     opts = {
       picker = {
         enabled = true,
         main = { current = true }, -- open picks in the window you were in, not the first one
-        sources = { explorer = { hidden = true } }, -- show dotfiles in the tree (zsh/ only holds .zshrc)
+        sources = {
+          explorer = { hidden  = true },          -- show dotfiles in the tree (zsh/ only holds .zshrc) },
+          files    = { confirm = 'edit_vsplit' }, -- <cr> opens in a vertical split
+          grep     = { confirm = 'edit_vsplit' },
+        },
       },
       notifier = { enabled = true },
       input = { enabled = true },

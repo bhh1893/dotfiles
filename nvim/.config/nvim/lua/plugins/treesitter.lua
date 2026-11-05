@@ -13,6 +13,10 @@ return {
       -- (macOS: brew install tree-sitter-cli; Xcode CLT provides clang)
       if vim.fn.executable('tree-sitter') == 1 then
         require('nvim-treesitter').install(parsers)
+      else
+        vim.schedule(function()
+          vim.notify('tree-sitter CLI not found: parsers will not be installed', vim.log.levels.WARN)
+        end)
       end
 
       -- Treesitter highlighting and indent for any filetype with a parser
