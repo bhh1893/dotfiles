@@ -160,6 +160,10 @@ alias lt="eza --tree --level=2 --icons=always"
 export _ZO_FZF_OPTS="$FZF_DEFAULT_OPTS --height=45% --layout=reverse --preview 'eza --tree --level=2 --color=always {2..}'"
 eval "$(zoxide init zsh --cmd cd)"
 
+autoload -Uz add-zsh-hook
+_ls_on_chpwd() { eza --icons=always }
+add-zsh-hook chpwd _ls_on_chpwd
+
 # ---- Yazi (file manager) -----
 
 # y opens yazi; quitting with q leaves the shell in the folder you browsed to (Q doesn't)
